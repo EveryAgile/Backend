@@ -1,4 +1,4 @@
-package EveryEgile.jaeyeon.entity;
+package org.everyagile.everyagile.everyagile.entity;
 
 import lombok.*;
 import org.springframework.transaction.annotation.Transactional;

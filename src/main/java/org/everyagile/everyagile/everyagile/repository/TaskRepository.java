@@ -1,8 +1,8 @@
-package EveryEgile.jaeyeon.repository;
+package org.everyagile.everyagile.everyagile.repository;
 
-import EveryEgile.jaeyeon.entity.Backlog;
+import org.everyagile.everyagile.everyagile.entity.Backlog;
 import org.springframework.data.jpa.repository.JpaRepository;
-import EveryEgile.jaeyeon.entity.Task;
+import org.everyagile.everyagile.everyagile.entity.Task;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;

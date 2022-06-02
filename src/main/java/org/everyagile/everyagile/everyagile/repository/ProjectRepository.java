@@ -1,7 +1,7 @@
-package EveryEgile.jaeyeon.repository;
+package org.everyagile.everyagile.everyagile.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import EveryEgile.jaeyeon.entity.Project;
+import org.everyagile.everyagile.everyagile.entity.Project;
 
 import java.util.List;
 

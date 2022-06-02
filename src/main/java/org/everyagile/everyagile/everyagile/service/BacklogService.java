@@ -1,12 +1,12 @@
-package EveryEgile.jaeyeon.service;
+package org.everyagile.everyagile.everyagile.service;
 
-import EveryEgile.jaeyeon.entity.Sprint;
-import EveryEgile.jaeyeon.dto.BacklogDto;
-import EveryEgile.jaeyeon.repository.BacklogRepository;
+import org.everyagile.everyagile.everyagile.entity.Sprint;
+import org.everyagile.everyagile.everyagile.dto.BacklogDto;
+import org.everyagile.everyagile.everyagile.repository.BacklogRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import EveryEgile.jaeyeon.entity.Backlog;
+import org.everyagile.everyagile.everyagile.entity.Backlog;
 
 import java.util.ArrayList;
 import java.util.List;

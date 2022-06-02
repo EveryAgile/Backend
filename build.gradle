@@ -4,7 +4,7 @@ plugins {
 	id 'java'
 }
 
-group = 'com.example'
+group = 'org.EveryAgile.EveryAgile'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
@@ -19,14 +19,15 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	compileOnly 'org.projectlombok:lombok'
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-	runtimeOnly 'mysql:mysql-connector-java'
-	annotationProcessor 'org.projectlombok:lombok'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.6.7'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.6.7'
+	implementation 'org.springframework.boot:spring-boot-starter-web:2.6.7'
+	compileOnly 'org.projectlombok:lombok:1.18.24'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools:2.6.7'
+	runtimeOnly 'mysql:mysql-connector-java:8.0.29'
+	annotationProcessor 'org.projectlombok:lombok:1.18.24'
+	runtimeOnly 'com.h2database:h2:2.1.212'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.7'
 }
 
 tasks.named('test') {

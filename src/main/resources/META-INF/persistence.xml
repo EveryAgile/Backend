@@ -4,10 +4,10 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
     <!--  EntityManagerFactory 생성 시 사용되는 persistence name -->
     <persistence-unit name="persistence">
-        <class> EveryEgile.jaeyeon.entity.Project </class>
-        <class> EveryEgile.jaeyeon.entity.Sprint </class>
-        <class> EveryEgile.jaeyeon.entity.Backlog </class>
-        <class> EveryEgile.jaeyeon.entity.Task </class>
+        <class>org.everyagile.everyagile.everyagile.entity.Project</class>
+        <class>org.everyagile.everyagile.everyagile.entity.Sprint</class>
+        <class>org.everyagile.everyagile.everyagile.entity.Backlog</class>
+        <class>org.everyagile.everyagile.everyagile.entity.Task</class>
 
         <properties>
             <!-- 필수 속성 -->

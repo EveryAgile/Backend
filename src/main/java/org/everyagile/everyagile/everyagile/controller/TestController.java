@@ -1,24 +1,22 @@
-package EveryEgile.jaeyeon.controller;
+package org.everyagile.everyagile.everyagile.controller;
 
-import EveryEgile.jaeyeon.entity.Backlog;
-import EveryEgile.jaeyeon.entity.Project;
-import EveryEgile.jaeyeon.entity.Sprint;
-import EveryEgile.jaeyeon.entity.Task;
-import EveryEgile.jaeyeon.service.ProjectService;
-import EveryEgile.jaeyeon.service.SprintService;
+import org.everyagile.everyagile.everyagile.entity.Backlog;
+import org.everyagile.everyagile.everyagile.entity.Project;
+import org.everyagile.everyagile.everyagile.entity.Sprint;
+import org.everyagile.everyagile.everyagile.service.ProjectService;
+import org.everyagile.everyagile.everyagile.service.SprintService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import EveryEgile.jaeyeon.dto.BacklogDto;
-import EveryEgile.jaeyeon.dto.ProjectDto;
-import EveryEgile.jaeyeon.dto.SprintDto;
-import EveryEgile.jaeyeon.dto.TaskDto;
-import EveryEgile.jaeyeon.service.BacklogService;
-import EveryEgile.jaeyeon.service.TaskService;
+import org.everyagile.everyagile.everyagile.dto.BacklogDto;
+import org.everyagile.everyagile.everyagile.dto.ProjectDto;
+import org.everyagile.everyagile.everyagile.dto.SprintDto;
+import org.everyagile.everyagile.everyagile.dto.TaskDto;
+import org.everyagile.everyagile.everyagile.service.BacklogService;
+import org.everyagile.everyagile.everyagile.service.TaskService;
 import java.util.List;
 
 @Controller

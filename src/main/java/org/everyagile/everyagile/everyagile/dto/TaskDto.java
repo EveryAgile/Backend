@@ -1,12 +1,12 @@
-package EveryEgile.jaeyeon.dto;
+package org.everyagile.everyagile.everyagile.dto;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import EveryEgile.jaeyeon.entity.Backlog;
-import EveryEgile.jaeyeon.entity.Task;
+import org.everyagile.everyagile.everyagile.entity.Backlog;
+import org.everyagile.everyagile.everyagile.entity.Task;
 
 import java.time.LocalDateTime;
 

@@ -1,12 +1,11 @@
-package EveryEgile.jaeyeon.service;
+package org.everyagile.everyagile.everyagile.service;
 
-import EveryEgile.jaeyeon.entity.emf.UniqueEntityManager;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import EveryEgile.jaeyeon.entity.Project;
-import EveryEgile.jaeyeon.dto.ProjectDto;
-import EveryEgile.jaeyeon.repository.ProjectRepository;
+import org.everyagile.everyagile.everyagile.entity.Project;
+import org.everyagile.everyagile.everyagile.dto.ProjectDto;
+import org.everyagile.everyagile.everyagile.repository.ProjectRepository;
 
 import java.util.Optional;
 

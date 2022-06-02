@@ -1,20 +1,17 @@
-package EveryEgile.jaeyeon.service;
+package org.everyagile.everyagile.everyagile.service;
 
-import EveryEgile.jaeyeon.entity.Backlog;
-import EveryEgile.jaeyeon.dto.TaskDto;
-import EveryEgile.jaeyeon.repository.TaskRepository;
+import org.everyagile.everyagile.everyagile.entity.Backlog;
+import org.everyagile.everyagile.everyagile.dto.TaskDto;
+import org.everyagile.everyagile.everyagile.repository.TaskRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import EveryEgile.jaeyeon.entity.Task;
+import org.everyagile.everyagile.everyagile.entity.Task;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import static EveryEgile.jaeyeon.entity.emf.UniqueEntityManager.em;
 
 @AllArgsConstructor
 @Service

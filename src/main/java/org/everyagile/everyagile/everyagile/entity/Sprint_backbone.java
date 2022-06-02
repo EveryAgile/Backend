@@ -1,4 +1,4 @@
-package EveryEgile.jaeyeon.entity;
+package org.everyagile.everyagile.everyagile.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
