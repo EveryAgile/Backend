@@ -20,4 +20,10 @@ public class ExceptionAdvice {
     protected CommonResult defaultException(HttpServletRequest request, Exception e) {
         return responseService.getFailResult();
     }
+
+    @ExceptionHandler(CUsernameNotFoundException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult usernameNotFoundException(HttpServletRequest request, Exception e){
+        return responseService.getFailResultWithMsg("오류가 발생하였습니다. 계정의 Username을 찾을 수 없습니다.");
+    }
 }
