@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import org.everyagile.everyagile.dto.ProjectRequestDto;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -31,12 +33,18 @@ public class Project extends TimeStamped{
     @Column(nullable = false)
     private ProjType type;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name="id")
-    private Collection<User> users;
+    @ManyToMany()
+    private List<User> users = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<Sprint> sprints = new ArrayList<>();
 
     public void addUser(User user) {
         users.add(user);
+    }
+
+    public void deleteUser(User user) {
+        users.remove(user);
     }
 
     public Project(ProjectRequestDto requestDto, User user) {
@@ -45,5 +53,13 @@ public class Project extends TimeStamped{
         this.endTime = requestDto.getEndTime();
         this.type = requestDto.getType();
         addUser(user);
+    }
+
+    public void addSprint(Sprint sprint) {
+        sprints.add(sprint);
+    }
+
+    public void deleteSprint(Sprint sprint) {
+        sprints.remove(sprint);
     }
 }

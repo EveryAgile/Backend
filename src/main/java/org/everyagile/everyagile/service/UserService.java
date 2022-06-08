@@ -5,9 +5,7 @@ import org.everyagile.everyagile.advice.CAccountExistedException;
 import org.everyagile.everyagile.advice.CRefreshTokenException;
 import org.everyagile.everyagile.advice.CSigninFailedException;
 import org.everyagile.everyagile.advice.CUsernameNotFoundException;
-import org.everyagile.everyagile.domain.RefreshToken;
-import org.everyagile.everyagile.domain.Role;
-import org.everyagile.everyagile.domain.User;
+import org.everyagile.everyagile.domain.*;
 import org.everyagile.everyagile.dto.SignUpRequestDto;
 import org.everyagile.everyagile.dto.TokenDto;
 import org.everyagile.everyagile.dto.TokenRequestDto;
@@ -20,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -93,6 +92,18 @@ public class UserService {
                 .name(user.getName())
                 .build();
     }
+
+    public List<Project> getUserProject (String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
+        return user.getProjects();
+    }
+
+    public List<Sprint> getUserSprint (String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
+        return user.getSprints();
+    }
+
+
 
 
 }
