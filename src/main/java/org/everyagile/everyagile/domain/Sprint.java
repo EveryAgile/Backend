@@ -3,7 +3,6 @@ package org.everyagile.everyagile.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.everyagile.everyagile.domain.response.Importance;
 import org.everyagile.everyagile.dto.SprintRequestDto;
 
 import javax.persistence.*;
@@ -18,10 +17,11 @@ public class Sprint extends TimeStamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="SPRINT_ID")
     private Long id;
 
     @Column(nullable = false)
-    private String springName;
+    private String sprintName;
 
     @Column(nullable = false)
     private String endTime;
@@ -33,26 +33,19 @@ public class Sprint extends TimeStamped{
     @Column(nullable = false)
     private Importance importance;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Project project;
-
-    @ManyToMany()
-    private List<User> users = new ArrayList<>();
-
     // 완료 여부
     @Column(nullable = false)
     private boolean status;
 
-    public void addUser(User user) {
-        this.users.add(user);
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="PROJECT_ID")
+    private Project project;
 
-    public void deleteUser(User user) {
-        this.users.remove(user);
-    }
+    @OneToMany(mappedBy = "sprint")
+    private List<Backlog> backlogs = new ArrayList<Backlog>();
 
     public Sprint(SprintRequestDto requestDto, boolean status, Project project) {
-        this.springName = requestDto.getSprintName();
+        this.sprintName = requestDto.getSprintName();
         this.endTime = requestDto.getEndTime();
         this.description = requestDto.getDescription();
         this.importance = requestDto.getImportance();

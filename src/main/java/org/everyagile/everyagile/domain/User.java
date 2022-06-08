@@ -20,6 +20,7 @@ public class User extends TimeStamped implements UserDetails {
 
     @Id
     @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @Column(name = "USER_ID")
     private Long id;
 
     @Column(nullable = false)
@@ -34,30 +35,6 @@ public class User extends TimeStamped implements UserDetails {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
-
-    @ManyToMany
-    @JoinTable(name = "project")
-    private List<Project> projects = new ArrayList<>();
-
-    @ManyToMany
-    @JoinTable(name = "sprint")
-    private List<Sprint> sprints = new ArrayList<>();
-
-    public void addSprint(Sprint sprint) {
-        this.sprints.add(sprint);
-    }
-
-    public void deleteSprint(Sprint sprint){
-        this.sprints.remove(sprint);
-    }
-
-    public void addProject(Project project) {
-        this.projects.add(project);
-    }
-
-    public void deleteProject(Project project) {
-        this.projects.remove(project);
-    }
 
     public String getRoleKey() {
         return this.role.getKey();

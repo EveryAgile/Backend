@@ -18,6 +18,7 @@ public class Project extends TimeStamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "PROJECT_ID")
     private Long id;
 
     @Column(nullable = false)
@@ -33,33 +34,15 @@ public class Project extends TimeStamped{
     @Column(nullable = false)
     private ProjType type;
 
-    @ManyToMany()
-    private List<User> users = new ArrayList<>();
+    @OneToMany(mappedBy = "project")
+    private List<Sprint> sprints = new ArrayList<Sprint>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Sprint> sprints = new ArrayList<>();
 
-    public void addUser(User user) {
-        users.add(user);
-    }
-
-    public void deleteUser(User user) {
-        users.remove(user);
-    }
-
-    public Project(ProjectRequestDto requestDto, User user) {
+    public Project(ProjectRequestDto requestDto) {
         this.projectName = requestDto.getProjectName();
         this.startTime = requestDto.getStartTime();
         this.endTime = requestDto.getEndTime();
         this.type = requestDto.getType();
-        addUser(user);
     }
 
-    public void addSprint(Sprint sprint) {
-        sprints.add(sprint);
-    }
-
-    public void deleteSprint(Sprint sprint) {
-        sprints.remove(sprint);
-    }
 }

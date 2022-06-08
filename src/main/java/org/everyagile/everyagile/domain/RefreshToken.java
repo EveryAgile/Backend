@@ -15,6 +15,7 @@ import javax.persistence.*;
 public class RefreshToken extends TimeStamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="REFRESHTOKEN_ID")
     private Long id;
 
     @Column(nullable = false)

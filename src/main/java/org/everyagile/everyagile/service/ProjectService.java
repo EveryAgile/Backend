@@ -6,13 +6,20 @@ import org.everyagile.everyagile.advice.CProjectNotExistedException;
 import org.everyagile.everyagile.advice.CUsernameNotFoundException;
 import org.everyagile.everyagile.domain.Project;
 import org.everyagile.everyagile.domain.User;
+import org.everyagile.everyagile.domain.UserProject;
 import org.everyagile.everyagile.dto.InviteRequestDto;
 import org.everyagile.everyagile.dto.ProjectRequestDto;
+import org.everyagile.everyagile.dto.responseDto.ProjectResponseDto;
+import org.everyagile.everyagile.dto.responseDto.UserResponseDto;
 import org.everyagile.everyagile.repository.ProjectRepository;
+import org.everyagile.everyagile.repository.UserProjectRepository;
 import org.everyagile.everyagile.repository.UserRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -20,48 +27,54 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final UserProjectRepository userProjectRepository;
 
+    // 프로젝트 생성
     @Transactional
-    public Project createProject(String email, ProjectRequestDto requestDto) {
+    public ProjectResponseDto createProject(String email, ProjectRequestDto requestDto) {
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
-        Project project = new Project(requestDto, user);
-        user.addProject(project);
-        project.addUser(user);
-        userRepository.save(user);
-        return projectRepository.save(project);
+        Project project = new Project(requestDto);
+        projectRepository.save(project);
+        UserProject userProject = new UserProject(user, project);
+        userProjectRepository.save(userProject);
+        return new ProjectResponseDto(project);
     }
 
-    public Project getProjectByIdx(Long projectId) {
+    // 프로젝트 조회
+    public ProjectResponseDto getProjectByIdx(Long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(CProjectNotExistedException::new);
-        return project;
+        return new ProjectResponseDto(project);
     }
 
+    // 프로젝트 삭제
     @Transactional
     public void deleteProjectByIdx(Long projectId, String email) {
-        Project project = projectRepository.findById(projectId).orElseThrow(CProjectNotExistedException::new);
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
-        Boolean isMember = project.getUsers().contains(user);
-        if(!isMember.equals(true)){
-            throw new CNotMemberException();
-        }
-        user.deleteProject(project);
-        userRepository.save(user);
+        Project project = projectRepository.findById(projectId).orElseThrow(CProjectNotExistedException::new);
         projectRepository.deleteById(projectId);
+        userProjectRepository.deleteAllByProject(project);
     }
 
+    // 멤버 초대
     @Transactional
-    public Project inviteMember(String email, InviteRequestDto requestDto) {
+    public void inviteMember(String email, InviteRequestDto requestDto) {
         Project project = projectRepository.findById(requestDto.getProjectId()).orElseThrow(CProjectNotExistedException::new);
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
-        Boolean isMember = project.getUsers().contains(user);
-        if(!isMember.equals(true)){
-            throw new CNotMemberException();
-        }
         User member = userRepository.findByEmail(requestDto.getMemberEmail()).orElseThrow(CUsernameNotFoundException::new);
-        project.addUser(member);
-        member.addProject(project);
-        userRepository.save(member);
-        projectRepository.save(project);
-        return project;
+        UserProject userProject = new UserProject(member, project);
+        userProjectRepository.save(userProject);
+    }
+
+    // 멤버 조회
+    public List<UserResponseDto> getMembers(Long projectId, String email){
+        Project project = projectRepository.findById(projectId).orElseThrow(CProjectNotExistedException::new);
+        User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
+        List<UserResponseDto> users = new ArrayList<>();
+        List<UserProject> userProjects =  userProjectRepository.findAllByProject(project);
+        for(UserProject group : userProjects) {
+            User member = group.getUser();
+            users.add(new UserResponseDto(member));
+        }
+        return users;
     }
 }
