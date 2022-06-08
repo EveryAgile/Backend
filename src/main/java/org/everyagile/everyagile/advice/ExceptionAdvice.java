@@ -87,4 +87,10 @@ public class ExceptionAdvice {
     protected CommonResult notMemberException(HttpServletRequest request, Exception e){
         return responseService.getFailResultWithMsg("회원은 해당 프로젝트의 멤버가 아닙니다.");
     }
+
+    @ExceptionHandler(CSprintNotExistedException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult sprintNotExistedException(HttpServletRequest request, Exception e){
+        return responseService.getFailResultWithMsg("해당 스프린트가 존재하지 않습니다.");
+    }
 }
