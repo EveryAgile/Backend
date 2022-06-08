@@ -4,7 +4,7 @@ import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.everyagile.everyagile.domain.response.CommonResult;
 import org.everyagile.everyagile.domain.response.SingleResult;
-import org.everyagile.everyagile.dto.UserResponseDto;
+import org.everyagile.everyagile.dto.responseDto.UserResponseDto;
 import org.everyagile.everyagile.service.ResponseService;
 import org.everyagile.everyagile.service.UserService;
 import org.springframework.security.core.Authentication;
@@ -52,7 +52,7 @@ public class UserController {
     public CommonResult getUserProject() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        return responseService.getSingleResult(userService.getUserProject(email));
+        return responseService.getListResult(userService.getUserProject(email));
     }
 
     @ApiImplicitParams({
@@ -69,6 +69,6 @@ public class UserController {
     public CommonResult getUserSprint() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        return responseService.getSingleResult(userService.getUserSprint(email));
+        return responseService.getListResult(userService.getUserSprint(email));
     }
 }

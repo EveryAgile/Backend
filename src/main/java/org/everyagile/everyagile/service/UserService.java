@@ -9,15 +9,20 @@ import org.everyagile.everyagile.domain.*;
 import org.everyagile.everyagile.dto.SignUpRequestDto;
 import org.everyagile.everyagile.dto.TokenDto;
 import org.everyagile.everyagile.dto.TokenRequestDto;
-import org.everyagile.everyagile.dto.UserResponseDto;
+import org.everyagile.everyagile.dto.responseDto.ProjectResponseDto;
+import org.everyagile.everyagile.dto.responseDto.SprintResponseDto;
+import org.everyagile.everyagile.dto.responseDto.UserResponseDto;
 import org.everyagile.everyagile.repository.RefreshTokenRepository;
+import org.everyagile.everyagile.repository.UserProjectRepository;
 import org.everyagile.everyagile.repository.UserRepository;
+import org.everyagile.everyagile.repository.UserSprintRepository;
 import org.everyagile.everyagile.security.JwtTokenProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,6 +33,8 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final UserProjectRepository userProjectRepository;
+    private final UserSprintRepository userSprintRepository;
 
     // 로그인 로직
     @Transactional
@@ -62,6 +69,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    // 토큰 재발급
     @Transactional
     public TokenDto reissue(TokenRequestDto requestDto) {
         if(!jwtTokenProvider.validateToken(requestDto.getRefreshToken())) {
@@ -84,26 +92,33 @@ public class UserService {
         return newCreatedToken;
     }
 
+    // 회원 정보 조회
     public UserResponseDto findByEmail(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
-        return UserResponseDto.builder()
-                .id(user.getId())
-                .email(user.getEmail())
-                .name(user.getName())
-                .build();
+        return new UserResponseDto(user);
     }
 
-    public List<Project> getUserProject (String email) {
+    // 회원별 프로젝트 리스트 조회
+    public List<ProjectResponseDto> getUserProject (String email) {
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
-        return user.getProjects();
+        List<UserProject> groups =  userProjectRepository.findAllByUser(user);
+        List<ProjectResponseDto> projects = new ArrayList<>();
+        for(UserProject group : groups) {
+            Project project = group.getProject();
+            projects.add(new ProjectResponseDto(project));
+        }
+        return projects;
     }
 
-    public List<Sprint> getUserSprint (String email) {
+    // 회원별 스프린트 리스트 조회
+    public List<SprintResponseDto> getUserSprint(String email) {
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
-        return user.getSprints();
+        List<UserSprint> userSprints = userSprintRepository.findAllByUser(user);
+        List<SprintResponseDto> sprints = new ArrayList<>();
+        for(UserSprint userSprint: userSprints){
+            sprints.add(new SprintResponseDto(userSprint.getSprint()));
+        }
+        return sprints;
     }
-
-
-
 
 }

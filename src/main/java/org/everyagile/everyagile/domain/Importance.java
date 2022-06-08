@@ -1,4 +1,4 @@
-package org.everyagile.everyagile.domain.response;
+package org.everyagile.everyagile.domain;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

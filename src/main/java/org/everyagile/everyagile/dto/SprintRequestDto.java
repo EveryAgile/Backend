@@ -1,7 +1,9 @@
 package org.everyagile.everyagile.dto;
 
 import lombok.Data;
-import org.everyagile.everyagile.domain.response.Importance;
+import org.everyagile.everyagile.domain.Importance;
+
+import java.util.List;
 
 @Data
 public class SprintRequestDto {
@@ -10,4 +12,5 @@ public class SprintRequestDto {
     private String endTime;
     private String description;
     private Importance importance;
+    private List<String> users;
 }
