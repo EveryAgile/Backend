@@ -34,10 +34,9 @@ public class Sprint extends TimeStamped{
     private Importance importance;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id")
     private Project project;
 
-    @ManyToMany(mappedBy = "user")
+    @ManyToMany()
     private List<User> users = new ArrayList<>();
 
     // 완료 여부

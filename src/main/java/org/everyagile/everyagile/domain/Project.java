@@ -33,11 +33,10 @@ public class Project extends TimeStamped{
     @Column(nullable = false)
     private ProjType type;
 
-    @ManyToMany(mappedBy = "user")
+    @ManyToMany()
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, mappedBy = "project")
-    @JoinColumn(name = "id")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Sprint> sprints = new ArrayList<>();
 
     public void addUser(User user) {
