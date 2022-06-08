@@ -25,6 +25,9 @@ public class ProjectService {
     public Project createProject(String email, ProjectRequestDto requestDto) {
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
         Project project = new Project(requestDto, user);
+        user.addProject(project);
+        project.addUser(user);
+        userRepository.save(user);
         return projectRepository.save(project);
     }
 
@@ -41,6 +44,8 @@ public class ProjectService {
         if(!isMember.equals(true)){
             throw new CNotMemberException();
         }
+        user.deleteProject(project);
+        userRepository.save(user);
         projectRepository.deleteById(projectId);
     }
 
@@ -54,6 +59,9 @@ public class ProjectService {
         }
         User member = userRepository.findByEmail(requestDto.getMemberEmail()).orElseThrow(CUsernameNotFoundException::new);
         project.addUser(member);
+        member.addProject(project);
+        userRepository.save(member);
+        projectRepository.save(project);
         return project;
     }
 }
