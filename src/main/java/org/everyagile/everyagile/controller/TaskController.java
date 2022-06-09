@@ -2,35 +2,28 @@ package org.everyagile.everyagile.controller;
 
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
-import org.everyagile.everyagile.domain.Project;
-import org.everyagile.everyagile.domain.Sprint;
 import org.everyagile.everyagile.domain.response.CommonResult;
-import org.everyagile.everyagile.domain.response.SingleResult;
-import org.everyagile.everyagile.dto.ProjectRequestDto;
-import org.everyagile.everyagile.dto.SprintRequestDto;
-import org.everyagile.everyagile.dto.responseDto.SprintResponseDto;
+import org.everyagile.everyagile.dto.TaskRequestDto;
+import org.everyagile.everyagile.dto.responseDto.TaskResponseDto;
 import org.everyagile.everyagile.service.ResponseService;
-import org.everyagile.everyagile.service.SprintService;
+import org.everyagile.everyagile.service.TaskService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.List;
-
 @RestController
 @RequiredArgsConstructor
-@Api(tags = {"4. 스프린트 컨트롤러"})
-@RequestMapping(value = "/sprints")
-public class SprintController {
+@Api(tags = {"6. 할일 컨트롤러"})
+@RequestMapping(value = "/tasks")
+public class TaskController {
 
     private final ResponseService responseService;
-    private final SprintService sprintService;
+    private final TaskService taskService;
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
-    @ApiOperation(value = "스프린트 생성", notes = "스프린트를 생성한다 (중요도는 HIGH, DEFAULT, LOW)")
+    @ApiOperation(value = "할일 생성", notes = "할일을 생성한다")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK !!"),
             @ApiResponse(code = 400, message = "BAD REQUEST !!"),
@@ -38,10 +31,10 @@ public class SprintController {
             @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
     })
     @PostMapping("")
-    public CommonResult createSprint(@RequestBody @ApiParam(value = "생성할 스프린트 정보", required = true)SprintRequestDto requestDto) {
+    public CommonResult createTask(@RequestBody @ApiParam(value = "생성할 할일 정보", required = true) TaskRequestDto requestDto){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        return responseService.getSingleResult(sprintService.createSprint(email, requestDto));
+        return responseService.getSingleResult(taskService.createTask(email, requestDto));
     }
 
     @ApiResponses({
@@ -50,96 +43,99 @@ public class SprintController {
             @ApiResponse(code = 404, message = "NOT FOUND !!"),
             @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
     })
-    @ApiOperation(value = "모든 스프린트 조회", notes = "모든 스프린트를 조회한다.")
+    @ApiOperation(value = "모든 할일 조회", notes = "모든 할일을 조회한다.")
     @GetMapping("")
-    public CommonResult getALlSprints() {
-        return responseService.getListResult(sprintService.getAllSprints());
+    public CommonResult getALlTasks() {
+        return responseService.getListResult(taskService.getAllTasks());
     }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
-    @ApiOperation(value = "스프린트 정보 조회", notes = "스프린트 정보를 조회한다")
+    @ApiOperation(value = "할일 정보 조회", notes = "할일 정보를 조회한다")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK !!"),
             @ApiResponse(code = 400, message = "BAD REQUEST !!"),
             @ApiResponse(code = 404, message = "NOT FOUND !!"),
             @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
     })
-    @GetMapping("/{sprintId}")
-    public CommonResult getSprint(@PathVariable Long sprintId) {
+    @GetMapping("/{taskId}")
+    public CommonResult getBacklog(@PathVariable Long taskId){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        SprintResponseDto responseDto = sprintService.getSprint(email, sprintId);
+        TaskResponseDto responseDto = taskService.getTask(email, taskId);
         return responseService.getSingleResult(responseDto);
     }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
-    @ApiOperation(value = "프로젝트별 스프린트 목록 조회", notes = "프로젝트별 스프린트 목록 정보를 조회한다")
+    @ApiOperation(value = "백로그별 할일 목록 조회", notes = "백로그별 할일 목록 정보를 조회한다")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK !!"),
             @ApiResponse(code = 400, message = "BAD REQUEST !!"),
             @ApiResponse(code = 404, message = "NOT FOUND !!"),
             @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
     })
-    @GetMapping("/project/{projectId}")
-    public CommonResult getSprintByProject(@PathVariable Long projectId) {
+    @GetMapping("/backlog/{backlogId}")
+    public CommonResult getTaskByBacklog(@PathVariable Long backlogId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        return responseService.getListResult(sprintService.getAllSprint(projectId, email));
+        return responseService.getListResult(taskService.getAllTask(backlogId, email));
     }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
-    @ApiOperation(value = "스프린트 완료 작성", notes = "스프린트 완료 여부를 작성한다")
+    @ApiOperation(value = "할일 완료 작성", notes = "할일 완료 여부를 작성한다")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK !!"),
             @ApiResponse(code = 400, message = "BAD REQUEST !!"),
             @ApiResponse(code = 404, message = "NOT FOUND !!"),
             @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
     })
-    @PutMapping("/{sprintId}")
-    public CommonResult setSprintStatus(@PathVariable Long sprintId, @RequestParam boolean status) {
+    @PutMapping("/{taskId}")
+    public CommonResult setTaskStatus(@PathVariable Long taskId, @RequestParam boolean status) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        return responseService.getSingleResult(sprintService.setSprintStatus(sprintId, status, email));
+        return responseService.getSingleResult(taskService.setTaskStatus(taskId, status, email));
     }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
-    @ApiOperation(value = "스프린트 삭제", notes = "스프린트를 삭제한다")
+    @ApiOperation(value = "할일 삭제", notes = "할일을 삭제한다")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK !!"),
             @ApiResponse(code = 400, message = "BAD REQUEST !!"),
             @ApiResponse(code = 404, message = "NOT FOUND !!"),
             @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
     })
-    @DeleteMapping("/{sprintId}")
-    public CommonResult deleteSprint(@PathVariable Long sprintId) {
+    @DeleteMapping("/{taskId}")
+    public CommonResult deleteTask(@PathVariable Long taskId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        sprintService.deleteSprint(sprintId, email);
+        taskService.deleteTask(taskId, email);
         return responseService.getSuccessResult();
     }
 
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
-    @ApiOperation(value = "스프린트 담당자 조회", notes = "스프린트 담당자를 조회한다")
+    @ApiOperation(value = "할일 담당자 조회", notes = "할일 담당자를 조회한다")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK !!"),
             @ApiResponse(code = 400, message = "BAD REQUEST !!"),
             @ApiResponse(code = 404, message = "NOT FOUND !!"),
             @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
     })
-    @GetMapping("/{sprintId}/members")
-    public CommonResult getAllUser(@PathVariable Long sprintId) {
+    @GetMapping("/{taskId}/members")
+    public CommonResult getAllUser(@PathVariable Long taskId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        return responseService.getListResult(sprintService.getAllUser(sprintId, email));
+        return responseService.getListResult(taskService.getAllUser(taskId, email));
     }
+
+
+
 }

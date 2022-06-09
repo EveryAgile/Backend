@@ -8,6 +8,7 @@ import org.everyagile.everyagile.advice.CUsernameNotFoundException;
 import org.everyagile.everyagile.domain.*;
 import org.everyagile.everyagile.dto.BacklogRequestDto;
 import org.everyagile.everyagile.dto.responseDto.BacklogResponseDto;
+import org.everyagile.everyagile.dto.responseDto.ProjectResponseDto;
 import org.everyagile.everyagile.dto.responseDto.UserResponseDto;
 import org.everyagile.everyagile.repository.BacklogRepository;
 import org.everyagile.everyagile.repository.SprintRepository;
@@ -43,6 +44,16 @@ public class BacklogService {
             userBacklogRepository.save(userBacklog);
         }
         return new BacklogResponseDto(backlog);
+    }
+
+    // 모든 백로그 조회
+    public List<BacklogResponseDto> getAllBacklogs() {
+        List<Backlog> backlogs = backlogRepository.findAll();
+        List<BacklogResponseDto> responseDtos = new ArrayList<>();
+        for(Backlog backlog: backlogs){
+            responseDtos.add(new BacklogResponseDto(backlog));
+        }
+        return responseDtos;
     }
 
     // 백로그 단건 조회

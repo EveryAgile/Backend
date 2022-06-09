@@ -38,6 +38,18 @@ public class UserController {
         return responseService.getSingleResult(userService.findByEmail(email));
     }
 
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK !!"),
+            @ApiResponse(code = 400, message = "BAD REQUEST !!"),
+            @ApiResponse(code = 404, message = "NOT FOUND !!"),
+            @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
+    })
+    @ApiOperation(value = "모든 회원 조회", notes = "모든 회원을 조회한다.")
+    @GetMapping("")
+    public CommonResult getALlUser() {
+        return responseService.getListResult(userService.getAllUsers());
+    }
+
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
@@ -87,5 +99,22 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
         return responseService.getListResult(userService.getUserBacklog(email));
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK !!"),
+            @ApiResponse(code = 400, message = "BAD REQUEST !!"),
+            @ApiResponse(code = 404, message = "NOT FOUND !!"),
+            @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
+    })
+    @ApiOperation(value = "회원의 모든 할일 조회", notes = "회원의 모든 할일을 조회한다.")
+    @GetMapping("/task")
+    public CommonResult getUserTask() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return responseService.getListResult(userService.getUserTask(email));
     }
 }

@@ -9,10 +9,7 @@ import org.everyagile.everyagile.domain.*;
 import org.everyagile.everyagile.dto.SignUpRequestDto;
 import org.everyagile.everyagile.dto.TokenDto;
 import org.everyagile.everyagile.dto.TokenRequestDto;
-import org.everyagile.everyagile.dto.responseDto.BacklogResponseDto;
-import org.everyagile.everyagile.dto.responseDto.ProjectResponseDto;
-import org.everyagile.everyagile.dto.responseDto.SprintResponseDto;
-import org.everyagile.everyagile.dto.responseDto.UserResponseDto;
+import org.everyagile.everyagile.dto.responseDto.*;
 import org.everyagile.everyagile.repository.*;
 import org.everyagile.everyagile.security.JwtTokenProvider;
 import org.springframework.security.core.Authentication;
@@ -34,6 +31,7 @@ public class UserService {
     private final UserProjectRepository userProjectRepository;
     private final UserSprintRepository userSprintRepository;
     private final UserBacklogRepository userBacklogRepository;
+    private final UserTaskRepository userTaskRepository;
 
     // 로그인 로직
     @Transactional
@@ -97,6 +95,16 @@ public class UserService {
         return new UserResponseDto(user);
     }
 
+    // 모든 회원 조회
+    public List<UserResponseDto> getAllUsers() {
+        List<User> users = userRepository.findAll();
+        List<UserResponseDto> userResponseDtos = new ArrayList<>();
+        for(User user: users){
+            userResponseDtos.add(new UserResponseDto(user));
+        }
+        return userResponseDtos;
+    }
+
     // 회원별 프로젝트 리스트 조회
     public List<ProjectResponseDto> getUserProject (String email) {
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
@@ -129,6 +137,17 @@ public class UserService {
             backlogs.add(new BacklogResponseDto(userBacklog.getBacklog()));
         }
         return backlogs;
+    }
+
+    // 회원별 할일 리스트 조회
+    public List<TaskResponseDto> getUserTask(String email){
+        User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
+        List<UserTask> userTasks = userTaskRepository.findAllByUser(user);
+        List<TaskResponseDto> tasks = new ArrayList<>();
+        for(UserTask userTask : userTasks) {
+            tasks.add(new TaskResponseDto(userTask.getTask()));
+        }
+        return tasks;
     }
 
 }

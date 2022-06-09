@@ -44,6 +44,18 @@ public class ProjectController {
         return responseService.getSingleResult(projectService.createProject(email, requestDto));
     }
 
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK !!"),
+            @ApiResponse(code = 400, message = "BAD REQUEST !!"),
+            @ApiResponse(code = 404, message = "NOT FOUND !!"),
+            @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
+    })
+    @ApiOperation(value = "모든 프로젝트 조회", notes = "모든 프로젝트를 조회한다.")
+    @GetMapping("")
+    public CommonResult getALlProjects() {
+        return responseService.getListResult(projectService.getAllProjects());
+    }
+
     @ApiOperation(value = "프로젝트 정보 조회", notes = "프로젝트 정보를 조회한다 (타입은 DEFAUT or DEVELOP)")
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK !!"),

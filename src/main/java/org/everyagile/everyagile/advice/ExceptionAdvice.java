@@ -99,4 +99,10 @@ public class ExceptionAdvice {
     protected CommonResult backlogNotExistedException(HttpServletRequest request, Exception e){
         return responseService.getFailResultWithMsg("해당 백로그가 존재하지 않습니다.");
     }
+
+    @ExceptionHandler(CTaskNotExistedException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected CommonResult taskNotExistedException(HttpServletRequest request, Exception e){
+        return responseService.getFailResultWithMsg("해당 할일이 존재하지 않습니다.");
+    }
 }
