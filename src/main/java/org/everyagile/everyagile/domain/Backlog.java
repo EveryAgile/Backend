@@ -16,7 +16,7 @@ import java.util.List;
 public class Backlog extends TimeStamped{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="BACKLOG_ID")
     private Long id;
 

@@ -38,6 +38,8 @@ public class SprintService {
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
         Sprint sprint = new Sprint(requestDto, false, project);
         sprintRepository.save(sprint);
+        project.addSprint(sprint);
+        projectRepository.save(project);
         List<String> emails = requestDto.getUsers();
         for(String e : emails){
             User member = userRepository.findByEmail(e).orElseThrow(CUsernameNotFoundException::new);

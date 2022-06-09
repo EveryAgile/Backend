@@ -19,7 +19,7 @@ import java.util.List;
 public class User extends TimeStamped implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy =  GenerationType.SEQUENCE)
     @Column(name = "USER_ID")
     private Long id;
 

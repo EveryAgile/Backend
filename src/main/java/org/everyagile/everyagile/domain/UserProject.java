@@ -10,7 +10,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 public class UserProject {
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy =  GenerationType.SEQUENCE)
     @Column(name = "USERPROJECT_ID")
     private Long id;
 

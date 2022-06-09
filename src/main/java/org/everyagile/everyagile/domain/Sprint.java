@@ -16,7 +16,7 @@ import java.util.List;
 public class Sprint extends TimeStamped{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     @Column(name="SPRINT_ID")
     private Long id;
 
@@ -51,6 +51,10 @@ public class Sprint extends TimeStamped{
         this.importance = requestDto.getImportance();
         this.status = status;
         this.project = project;
+    }
+
+    public void addBacklog(Backlog backlog) {
+        this.backlogs.add(backlog);
     }
 
     public void setSprintStatus(boolean status){
