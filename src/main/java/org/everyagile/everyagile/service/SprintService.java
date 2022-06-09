@@ -10,6 +10,7 @@ import org.everyagile.everyagile.domain.Sprint;
 import org.everyagile.everyagile.domain.User;
 import org.everyagile.everyagile.domain.UserSprint;
 import org.everyagile.everyagile.dto.SprintRequestDto;
+import org.everyagile.everyagile.dto.responseDto.ProjectResponseDto;
 import org.everyagile.everyagile.dto.responseDto.SprintResponseDto;
 import org.everyagile.everyagile.dto.responseDto.UserResponseDto;
 import org.everyagile.everyagile.repository.ProjectRepository;
@@ -54,6 +55,16 @@ public class SprintService {
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
         Sprint sprint = sprintRepository.findById(sprintId).orElseThrow(CSprintNotExistedException::new);
         return new SprintResponseDto(sprint);
+    }
+
+    // 모든 스프린트 조회
+    public List<SprintResponseDto> getAllSprints() {
+        List<Sprint> sprints = sprintRepository.findAll();
+        List<SprintResponseDto> responseDtos = new ArrayList<>();
+        for(Sprint sprint: sprints){
+            responseDtos.add(new SprintResponseDto(sprint));
+        }
+        return responseDtos;
     }
 
     // 스프린트 완료 여부 수정

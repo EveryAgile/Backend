@@ -46,6 +46,16 @@ public class ProjectService {
         return new ProjectResponseDto(project);
     }
 
+    // 모든 프로젝트 조회
+    public List<ProjectResponseDto> getAllProjects() {
+        List<Project> projects = projectRepository.findAll();
+        List<ProjectResponseDto> responseDtos = new ArrayList<>();
+        for(Project project: projects){
+            responseDtos.add(new ProjectResponseDto(project));
+        }
+        return responseDtos;
+    }
+
     // 프로젝트 삭제
     @Transactional
     public void deleteProjectByIdx(Long projectId, String email) {

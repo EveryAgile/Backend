@@ -37,6 +37,18 @@ public class BacklogController {
         return responseService.getSingleResult(backlogService.createBacklog(email, requestDto));
     }
 
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK !!"),
+            @ApiResponse(code = 400, message = "BAD REQUEST !!"),
+            @ApiResponse(code = 404, message = "NOT FOUND !!"),
+            @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
+    })
+    @ApiOperation(value = "모든 백로그 조회", notes = "모든 백로그를 조회한다.")
+    @GetMapping("")
+    public CommonResult getALlBacklogs() {
+        return responseService.getListResult(backlogService.getAllBacklogs());
+    }
+
     @ApiImplicitParams({
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })

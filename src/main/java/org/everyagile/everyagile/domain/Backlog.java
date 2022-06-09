@@ -39,6 +39,9 @@ public class Backlog extends TimeStamped{
     @JoinColumn(name = "SPRINT_ID")
     private Sprint sprint;
 
+    @OneToMany(mappedBy = "backlog")
+    private List<Task> tasks = new ArrayList<>();
+
 
     public Backlog(BacklogRequestDto requestDto, boolean status, Sprint sprint) {
         this.backlogName = requestDto.getBacklogName();
@@ -47,6 +50,14 @@ public class Backlog extends TimeStamped{
         this.manDay = requestDto.getManDay();
         this.status = status;
         this.sprint = sprint;
+    }
+
+    public void addTask(Task task){
+        this.tasks.add(task);
+    }
+
+    public void deleteTask(Task task){
+        this.tasks.remove(task);
     }
 
     public void setBacklogStatus(boolean status){
