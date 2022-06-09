@@ -71,4 +71,21 @@ public class UserController {
         String email = authentication.getName();
         return responseService.getListResult(userService.getUserSprint(email));
     }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
+    })
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "OK !!"),
+            @ApiResponse(code = 400, message = "BAD REQUEST !!"),
+            @ApiResponse(code = 404, message = "NOT FOUND !!"),
+            @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
+    })
+    @ApiOperation(value = "회원의 모든 백로그 조회", notes = "회원의 모든 백로그를 조회한다.")
+    @GetMapping("/backlog")
+    public CommonResult getUserBacklog() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String email = authentication.getName();
+        return responseService.getListResult(userService.getUserBacklog(email));
+    }
 }
