@@ -17,7 +17,7 @@ import java.util.List;
 public class Project extends TimeStamped{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PROJECT_ID")
     private Long id;
 
@@ -39,6 +39,10 @@ public class Project extends TimeStamped{
 
     public void addSprint(Sprint sprint) {
         sprints.add(sprint);
+    }
+
+    public void deleteSprint(Sprint sprint) {
+        sprints.remove(sprint);
     }
 
     public Project(ProjectRequestDto requestDto) {

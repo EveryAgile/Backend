@@ -10,7 +10,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 public class UserSprint {
     @Id
-    @GeneratedValue(strategy =  GenerationType.SEQUENCE)
+    @GeneratedValue(strategy =  GenerationType.IDENTITY)
     @Column(name = "USERSPRINT_ID")
     private Long id;
 

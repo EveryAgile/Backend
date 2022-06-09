@@ -16,7 +16,7 @@ import java.util.List;
 public class Sprint extends TimeStamped{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="SPRINT_ID")
     private Long id;
 
@@ -55,6 +55,10 @@ public class Sprint extends TimeStamped{
 
     public void addBacklog(Backlog backlog) {
         this.backlogs.add(backlog);
+    }
+
+    public void deleteBacklog(Backlog backlog){
+        this.backlogs.remove(backlog);
     }
 
     public void setSprintStatus(boolean status){

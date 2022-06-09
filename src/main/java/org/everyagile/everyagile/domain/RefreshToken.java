@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Builder
 public class RefreshToken extends TimeStamped{
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="REFRESHTOKEN_ID")
     private Long id;
 
