@@ -37,6 +37,13 @@ public class Project extends TimeStamped{
     @OneToMany(mappedBy = "project")
     private List<Sprint> sprints = new ArrayList<Sprint>();
 
+    public void addSprint(Sprint sprint) {
+        sprints.add(sprint);
+    }
+
+    public void deleteSprint(Sprint sprint) {
+        sprints.remove(sprint);
+    }
 
     public Project(ProjectRequestDto requestDto) {
         this.projectName = requestDto.getProjectName();

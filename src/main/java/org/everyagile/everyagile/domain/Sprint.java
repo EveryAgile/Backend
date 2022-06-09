@@ -53,6 +53,14 @@ public class Sprint extends TimeStamped{
         this.project = project;
     }
 
+    public void addBacklog(Backlog backlog) {
+        this.backlogs.add(backlog);
+    }
+
+    public void deleteBacklog(Backlog backlog){
+        this.backlogs.remove(backlog);
+    }
+
     public void setSprintStatus(boolean status){
         this.status = status;
     }

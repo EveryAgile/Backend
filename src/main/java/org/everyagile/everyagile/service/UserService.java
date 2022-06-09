@@ -9,13 +9,11 @@ import org.everyagile.everyagile.domain.*;
 import org.everyagile.everyagile.dto.SignUpRequestDto;
 import org.everyagile.everyagile.dto.TokenDto;
 import org.everyagile.everyagile.dto.TokenRequestDto;
+import org.everyagile.everyagile.dto.responseDto.BacklogResponseDto;
 import org.everyagile.everyagile.dto.responseDto.ProjectResponseDto;
 import org.everyagile.everyagile.dto.responseDto.SprintResponseDto;
 import org.everyagile.everyagile.dto.responseDto.UserResponseDto;
-import org.everyagile.everyagile.repository.RefreshTokenRepository;
-import org.everyagile.everyagile.repository.UserProjectRepository;
-import org.everyagile.everyagile.repository.UserRepository;
-import org.everyagile.everyagile.repository.UserSprintRepository;
+import org.everyagile.everyagile.repository.*;
 import org.everyagile.everyagile.security.JwtTokenProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -35,6 +33,7 @@ public class UserService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserProjectRepository userProjectRepository;
     private final UserSprintRepository userSprintRepository;
+    private final UserBacklogRepository userBacklogRepository;
 
     // 로그인 로직
     @Transactional
@@ -119,6 +118,17 @@ public class UserService {
             sprints.add(new SprintResponseDto(userSprint.getSprint()));
         }
         return sprints;
+    }
+
+    // 회원별 백로그 리스트 조회
+    public List<BacklogResponseDto> getUserBacklog(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
+        List<UserBacklog> userBacklogs = userBacklogRepository.findAllByUser(user);
+        List<BacklogResponseDto> backlogs = new ArrayList<>();
+        for(UserBacklog userBacklog : userBacklogs){
+            backlogs.add(new BacklogResponseDto(userBacklog.getBacklog()));
+        }
+        return backlogs;
     }
 
 }

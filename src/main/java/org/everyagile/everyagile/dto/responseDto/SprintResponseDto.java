@@ -8,6 +8,7 @@ import org.everyagile.everyagile.domain.Importance;
 public class SprintResponseDto {
     private Long sprintId;
     private String sprintName;
+    private Long projectId;
     private String endTime;
     private String description;
     private Importance importance;
@@ -20,5 +21,6 @@ public class SprintResponseDto {
         this.description = sprint.getDescription();
         this.importance = sprint.getImportance();
         this.status = sprint.isStatus();
+        this.projectId = sprint.getProject().getId();
     }
 }

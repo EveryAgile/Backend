@@ -38,6 +38,8 @@ public class SprintService {
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
         Sprint sprint = new Sprint(requestDto, false, project);
         sprintRepository.save(sprint);
+        project.addSprint(sprint);
+        projectRepository.save(project);
         List<String> emails = requestDto.getUsers();
         for(String e : emails){
             User member = userRepository.findByEmail(e).orElseThrow(CUsernameNotFoundException::new);
@@ -68,6 +70,9 @@ public class SprintService {
     public void deleteSprint(Long sprintId, String email) {
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
         Sprint sprint = sprintRepository.findById(sprintId).orElseThrow(CSprintNotExistedException::new);
+        Project project = sprint.getProject();
+        project.deleteSprint(sprint);
+        projectRepository.save(project);
         sprintRepository.delete(sprint);
         userSprintRepository.deleteAllBySprint(sprint);
     }
