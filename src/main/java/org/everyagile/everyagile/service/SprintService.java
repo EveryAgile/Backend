@@ -100,15 +100,15 @@ public class SprintService {
         return sprintResponseDtos;
     }
 
-    // 스프린트 담장자 조회
-    public List<UserResponseDto> getAllUser(Long sprintId, String email) {
-        Sprint sprint = sprintRepository.findById(sprintId).orElseThrow(CSprintNotExistedException::new);
-        User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
-        List<UserResponseDto> users = new ArrayList<>();
-        List<UserSprint> userSprints = userSprintRepository.findAllBySprint(sprint);
-        for(UserSprint userSprint : userSprints){
-            users.add(new UserResponseDto(userSprint.getUser()));
-        }
-        return users;
-    }
+//    // 스프린트 담장자 조회
+//    public List<UserResponseDto> getAllUser(Long sprintId, String email) {
+//        Sprint sprint = sprintRepository.findById(sprintId).orElseThrow(CSprintNotExistedException::new);
+//        User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
+//        List<UserResponseDto> users = new ArrayList<>();
+//        List<UserSprint> userSprints = userSprintRepository.findAllBySprint(sprint);
+//        for(UserSprint userSprint : userSprints){
+//            users.add(new UserResponseDto(userSprint.getUser()));
+//        }
+//        return users;
+//    }
 }

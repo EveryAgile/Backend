@@ -12,5 +12,4 @@ public class SprintRequestDto {
     private String endTime;
     private String description;
     private Importance importance;
-    private List<String> users;
 }

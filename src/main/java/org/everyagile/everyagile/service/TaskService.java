@@ -95,15 +95,15 @@ public class TaskService {
         return taskResponseDtos;
     }
 
-    // 할일 담당자 조회
-    public List<UserResponseDto> getAllUser(Long taskId, String email){
-        Task task = taskRepository.findById(taskId).orElseThrow(CTaskNotExistedException::new);
-        User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
-        List<UserResponseDto> users = new ArrayList<>();
-        List<UserTask> userTasks = userTaskRepository.findAllByTask(task);
-        for(UserTask userTask: userTasks){
-            users.add(new UserResponseDto(userTask.getUser()));
-        }
-        return users;
-    }
+//    // 할일 담당자 조회
+//    public List<UserResponseDto> getAllUser(Long taskId, String email){
+//        Task task = taskRepository.findById(taskId).orElseThrow(CTaskNotExistedException::new);
+//        User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
+//        List<UserResponseDto> users = new ArrayList<>();
+//        List<UserTask> userTasks = userTaskRepository.findAllByTask(task);
+//        for(UserTask userTask: userTasks){
+//            users.add(new UserResponseDto(userTask.getUser()));
+//        }
+//        return users;
+//    }
 }
