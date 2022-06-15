@@ -2,6 +2,9 @@ package org.everyagile.everyagile.dto.responseDto;
 
 import lombok.Getter;
 import org.everyagile.everyagile.domain.Backlog;
+import org.everyagile.everyagile.domain.Task;
+
+import java.util.List;
 
 @Getter
 public class BacklogResponseDto {
@@ -12,6 +15,7 @@ public class BacklogResponseDto {
     private Double storyPoint;
     private Double manDay;
     private boolean status;
+    private List<Task> tasks;
 
     public BacklogResponseDto(Backlog backlog) {
         this.backlogId = backlog.getId();
@@ -21,5 +25,6 @@ public class BacklogResponseDto {
         this.storyPoint = backlog.getStoryPoint();
         this.manDay = backlog.getManDay();
         this.status = backlog.isStatus();
+        this.tasks = backlog.getTasks();
     }
 }
