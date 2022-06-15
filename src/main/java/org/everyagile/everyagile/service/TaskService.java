@@ -36,12 +36,12 @@ public class TaskService {
         taskRepository.save(task);
         backlog.addTask(task);
         backlogRepository.save(backlog);
-        List<String> emails = requestDto.getUsers();
-        for(String e: emails){
-            User member = userRepository.findByEmail(e).orElseThrow(CUsernameNotFoundException::new);
-            UserTask userTask = new UserTask(member, task);
-            userTaskRepository.save(userTask);
-        }
+//        List<String> emails = requestDto.getUsers();
+//        for(String e: emails){
+//            User member = userRepository.findByEmail(e).orElseThrow(CUsernameNotFoundException::new);
+//            UserTask userTask = new UserTask(member, task);
+//            userTaskRepository.save(userTask);
+//        }
         return new TaskResponseDto(task);
     }
 

@@ -41,12 +41,12 @@ public class SprintService {
         sprintRepository.save(sprint);
         project.addSprint(sprint);
         projectRepository.save(project);
-        List<String> emails = requestDto.getUsers();
-        for(String e : emails){
-            User member = userRepository.findByEmail(e).orElseThrow(CUsernameNotFoundException::new);
-            UserSprint userSprint = new UserSprint(member, sprint);
-            userSprintRepository.save(userSprint);
-        }
+//        List<String> emails = requestDto.getUsers();
+//        for(String e : emails){
+//            User member = userRepository.findByEmail(e).orElseThrow(CUsernameNotFoundException::new);
+//            UserSprint userSprint = new UserSprint(member, sprint);
+//            userSprintRepository.save(userSprint);
+//        }
         return new SprintResponseDto(sprint);
     }
 
