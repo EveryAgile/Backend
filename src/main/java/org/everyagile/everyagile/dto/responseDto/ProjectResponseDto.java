@@ -3,6 +3,9 @@ package org.everyagile.everyagile.dto.responseDto;
 import lombok.Getter;
 import org.everyagile.everyagile.domain.ProjType;
 import org.everyagile.everyagile.domain.Project;
+import org.everyagile.everyagile.domain.Sprint;
+
+import java.util.List;
 
 @Getter
 public class ProjectResponseDto {
@@ -11,6 +14,8 @@ public class ProjectResponseDto {
     private String startTime;
     private String endTime;
     private ProjType type;
+    private List<Sprint> sprints;
+
 
     public ProjectResponseDto(Project project) {
         this.projectId = project.getId();
@@ -18,5 +23,6 @@ public class ProjectResponseDto {
         this.startTime = project.getStartTime();
         this.endTime = project.getEndTime();
         this.type = project.getType();
+        this.sprints = project.getSprints();
     }
 }
