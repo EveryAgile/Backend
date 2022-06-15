@@ -33,16 +33,19 @@ public class BacklogService {
     public BacklogResponseDto createBacklog(String email, BacklogRequestDto requestDto){
         Sprint sprint = sprintRepository.findById(requestDto.getSprintId()).orElseThrow(CSprintNotExistedException::new);
         User user = userRepository.findByEmail(email).orElseThrow(CUsernameNotFoundException::new);
+
         Backlog backlog = new Backlog(requestDto, false, sprint);
         backlogRepository.save(backlog);
         sprint.addBacklog(backlog);
         sprintRepository.save(sprint);
-        List<String> emails = requestDto.getUsers();
-        for(String e : emails){
-            User member = userRepository.findByEmail(e).orElseThrow(CUsernameNotFoundException::new);
-            UserBacklog userBacklog = new UserBacklog(member, backlog);
-            userBacklogRepository.save(userBacklog);
-        }
+//        List<String> emails = requestDto.getUsers();
+//        for(String e : emails){
+//            User member = userRepository.findByEmail(e).orElseThrow(CUsernameNotFoundException::new);
+//            if(!userBacklogRepository.findByUserAndBacklog(user, backlog).isPresent()){
+//                UserBacklog userBacklog = new UserBacklog(member, backlog);
+//                userBacklogRepository.save(userBacklog);
+//            }
+//        }
         return new BacklogResponseDto(backlog);
     }
 
