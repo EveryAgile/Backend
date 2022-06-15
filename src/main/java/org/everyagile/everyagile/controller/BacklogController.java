@@ -119,20 +119,20 @@ public class BacklogController {
         return responseService.getSuccessResult();
     }
 
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
-    })
-    @ApiOperation(value = "백로그 담당자 조회", notes = "백로그 담당자를 조회한다")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "OK !!"),
-            @ApiResponse(code = 400, message = "BAD REQUEST !!"),
-            @ApiResponse(code = 404, message = "NOT FOUND !!"),
-            @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
-    })
-    @GetMapping("/{backlogId}/members")
-    public CommonResult getAllUser(@PathVariable Long backlogId) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String email = authentication.getName();
-        return responseService.getListResult(backlogService.getAllUser(backlogId, email));
-    }
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
+//    })
+//    @ApiOperation(value = "백로그 담당자 조회", notes = "백로그 담당자를 조회한다")
+//    @ApiResponses({
+//            @ApiResponse(code = 200, message = "OK !!"),
+//            @ApiResponse(code = 400, message = "BAD REQUEST !!"),
+//            @ApiResponse(code = 404, message = "NOT FOUND !!"),
+//            @ApiResponse(code = 500, message = "INTERNAL SERVER ERROR !!")
+//    })
+//    @GetMapping("/{backlogId}/members")
+//    public CommonResult getAllUser(@PathVariable Long backlogId) {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String email = authentication.getName();
+//        return responseService.getListResult(backlogService.getAllUser(backlogId, email));
+//    }
 }

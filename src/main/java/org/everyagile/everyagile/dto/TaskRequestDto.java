@@ -9,5 +9,5 @@ public class TaskRequestDto {
     private String taskName;
     private Long backlogId;
     private Double manDay;
-    private List<String> users;
+//    private List<String> users;
 }

@@ -12,5 +12,5 @@ public class BacklogRequestDto {
     private String endTime;
     private Double storyPoint;
     private Double manDay;
-    private List<String> users;
+    //    private List<String> users;
 }
