@@ -14,7 +14,7 @@ public class ProjectResponseDto {
     private String startTime;
     private String endTime;
     private ProjType type;
-    private List<Sprint> sprints;
+
 
 
     public ProjectResponseDto(Project project) {
@@ -23,6 +23,6 @@ public class ProjectResponseDto {
         this.startTime = project.getStartTime();
         this.endTime = project.getEndTime();
         this.type = project.getType();
-        this.sprints = project.getSprints();
+
     }
 }

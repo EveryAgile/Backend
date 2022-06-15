@@ -16,7 +16,7 @@ public class SprintResponseDto {
     private String description;
     private Importance importance;
     private boolean status;
-    private List<Backlog> backlogList;
+
 
     public SprintResponseDto(Sprint sprint) {
         this.sprintId = sprint.getId();
@@ -26,6 +26,6 @@ public class SprintResponseDto {
         this.importance = sprint.getImportance();
         this.status = sprint.isStatus();
         this.projectId = sprint.getProject().getId();
-        this.backlogList = sprint.getBacklogs();
+
     }
 }
